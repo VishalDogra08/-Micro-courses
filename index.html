@@ -276,6 +276,32 @@
         </div>
     </div>
 
+    <!-- Help Desk Chat -->
+    <div id="help-desk-container" class="fixed bottom-6 right-6 z-[10000]">
+        <!-- Chat Window -->
+        <div id="help-desk-window" class="hidden absolute bottom-20 right-0 w-80 sm:w-96 bg-white rounded-xl shadow-2xl border border-gray-200 flex flex-col">
+            <header class="bg-indigo-600 text-white p-4 rounded-t-xl flex justify-between items-center">
+                <h3 class="font-bold text-lg">Help Desk</h3 >
+                <button id="close-help-desk" class="text-indigo-200 hover:text-white">&times;</button>
+            </header>
+            <div id="help-desk-messages" class="flex-1 p-4 overflow-y-auto h-80">
+                <!-- Chat messages will be appended here -->
+            </div>
+            <footer class="p-4 border-t">
+                <form id="help-desk-form" class="flex items-center space-x-2">
+                    <input type="text" id="help-desk-input" placeholder="Ask a question..." class="input input-bordered w-full text-sm" autocomplete="off" required>
+                    <button type="submit" class="btn bg-indigo-600 hover:bg-indigo-700 text-white !px-4">Send</button>
+                </form>
+            </footer>
+        </div>
+        <!-- Chat Bubble Button -->
+        <button id="help-desk-button" class="bg-indigo-600 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-lg hover:bg-indigo-700 transition transform hover:scale-110">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+        </button>
+    </div>
+
     <!-- Templates -->
     <template id="course-card-template">
         <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">

@@ -23,6 +23,44 @@ const transcriptionService = {
     }
 };
 
+// --- SIMULATED GEMINI API FOR HELP DESK ---
+const helpDeskService = {
+    /**
+     * Makes a request to a backend service that securely calls a generative AI like Gemini.
+     * @param {string} query The user's question.
+     * @returns {Promise<string>} A promise that resolves with a helpful answer.
+     */
+    async getAnswer(query) {
+        // The "live API link" is your own backend endpoint.
+        // Replace this with your actual backend URL (e.g., from a deployed serverless function).
+        const backendUrl = 'http://localhost:3000/api/chat'; 
+
+        try {
+            const response = await fetch(backendUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ query: query }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`API request failed with status ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data.reply;
+        } catch (error) {
+            console.error('Help Desk API Error:', error);
+            // Provide a fallback message if the live API fails
+            if (query.toLowerCase().includes('course')) {
+                return "I'm having trouble connecting to my brain right now, but you can find courses on the main dashboard. Try using the category filters!";
+            }
+            return "Sorry, I'm unable to connect to the help service at the moment. Please try again later.";
+        }
+    }
+};
+
 // --- IMPORTANT: CONFIGURE FIREBASE ---
 const firebaseConfig = {
     apiKey: "YOUR_API_KEY",
@@ -234,6 +272,7 @@ const app = {
         document.getElementById('create-course-btn').addEventListener('click', () => this.openCourseModal());
         document.getElementById('course-form').addEventListener('submit', this.handleCourseSave.bind(this));
         document.getElementById('lesson-form').addEventListener('submit', this.handleLessonSave.bind(this));
+        this.bindHelpDeskEvents();
 
         // Listen for auth state changes to control the app flow
         onAuthStateChanged(this.state.firebase.auth, this.handleAuthStateChange.bind(this));
@@ -748,12 +787,12 @@ const app = {
         // Ensure current page is within valid range
         if (currentPage > totalPages) {
             this.state.pagination.currentPage = totalPages;
-            this.changePage(totalPages);
+            this.renderLearnerDashboard(); // Re-render with corrected page
             return;
         }
         if (currentPage < 1) {
             this.state.pagination.currentPage = 1;
-            this.changePage(1);
+            this.renderLearnerDashboard(); // Re-render with corrected page
             return;
         }
 
@@ -1417,6 +1456,53 @@ const app = {
             transcript += `<p class="mb-2"><strong>00:${time}</strong> ${phrase} ${seed.toLowerCase().split(' ').pop()}.</p>`;
         }
         return transcript;
+    }
+    ,
+
+    // --- HELP DESK LOGIC ---
+    bindHelpDeskEvents() {
+        const helpButton = document.getElementById('help-desk-button');
+        const closeButton = document.getElementById('close-help-desk');
+        const helpWindow = document.getElementById('help-desk-window');
+        const helpForm = document.getElementById('help-desk-form');
+
+        helpButton.addEventListener('click', () => {
+            helpWindow.classList.toggle('hidden');
+            if (!helpWindow.classList.contains('hidden')) {
+                this.addHelpDeskMessage("Hi there! How can I help you today?", 'bot');
+            }
+        });
+
+        closeButton.addEventListener('click', () => {
+            helpWindow.classList.add('hidden');
+        });
+
+        helpForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const input = document.getElementById('help-desk-input');
+            const query = input.value.trim();
+            if (!query) return;
+
+            this.addHelpDeskMessage(query, 'user');
+            input.value = '';
+            input.disabled = true;
+
+            const response = await helpDeskService.getAnswer(query);
+            this.addHelpDeskMessage(response, 'bot');
+            input.disabled = false;
+            input.focus();
+        });
+    },
+
+    addHelpDeskMessage(text, type) {
+        const messagesContainer = document.getElementById('help-desk-messages');
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `chat-message ${type}`;
+        messageDiv.textContent = text;
+        messagesContainer.appendChild(messageDiv);
+
+        // Scroll to the bottom
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
 
 };

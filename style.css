@@ -268,3 +268,39 @@ body:has(#login-view.active) > div > header {
 .link-hover:hover {
     text-decoration-color: currentColor;
 }
+
+/* Help Desk Styles */
+#help-desk-window {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform-origin: bottom right;
+}
+
+#help-desk-window.hidden {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+    pointer-events: none;
+}
+
+#help-desk-messages {
+    scroll-behavior: smooth;
+}
+
+.chat-message {
+    max-width: 80%;
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    margin-bottom: 0.75rem;
+    word-wrap: break-word;
+}
+
+.chat-message.user {
+    background-color: #eef2ff; /* indigo-100 */
+    color: #3730a3; /* indigo-800 */
+    margin-left: auto;
+    border-bottom-right-radius: 0.25rem;
+}
+
+.chat-message.bot {
+    background-color: #f3f4f6; /* gray-100 */
+    border-bottom-left-radius: 0.25rem;
+}

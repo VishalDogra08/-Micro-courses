@@ -1,15 +1,39 @@
-# MicroCourses - Learning Management System
+# MicroCourses - A Feature-Rich Mini LMS
 
-A clean, modern learning management system built with HTML, CSS, and JavaScript.
+A dynamic, single-page Learning Management System (LMS) built with modern vanilla JavaScript, Firebase, and Tailwind CSS. It simulates a complete learning platform with distinct roles for Learners, Creators, and Administrators, showcasing a wide range of features from course consumption to content creation and administrative oversight.
 
 ## 🚀 Features
 
-- **Simplified Authentication**: Easy role-based login (Learner, Creator, Admin)
-- **Course Management**: Browse, filter, and take courses across multiple categories
-- **Progress Tracking**: Track lesson completion and earn certificates
-- **Local Storage**: Persistent data without page refreshes
-- **Clean Interface**: Minimal, professional design
-- **No External Dependencies**: Works offline with pure HTML/CSS/JS
+### General
+- **Single Page Application (SPA)**: Smooth, app-like experience with hash-based routing and no page reloads.
+- **Role-Based Access Control**: Three distinct user roles (Learner, Creator, Admin) with unique dashboards and permissions.
+- **Responsive Design**: A clean and modern UI built with Tailwind CSS that works seamlessly on all devices.
+- **AI-Powered Help Desk**: An integrated chat widget that connects to a backend service (powered by Google's Gemini) to answer user questions.
+
+### Authentication (Firebase)
+- **Secure User Management**: Full email/password authentication (sign-up and sign-in) handled by Firebase Auth.
+- **Simulated 2FA**: A demonstration of an OTP (One-Time Password) verification step for enhanced security.
+- **Persistent Sessions**: Users remain logged in across browser sessions.
+
+### Learner Features
+- **Course Catalog**: Browse and filter a rich catalog of courses by category.
+- **Paginated Content**: Easily navigate through a large number of courses.
+- **Enrollment & Progress Tracking**: Enroll in courses, track lesson completion, and view overall progress.
+- **Lesson Viewing**: Watch embedded video lessons.
+- **AI-Generated Transcripts**: View high-quality, AI-generated transcripts for video lessons.
+- **Certificate Generation**: Earn and view a unique, verifiable certificate upon course completion.
+
+### Creator Features
+- **Creator Application**: Learners can apply to become creators through a dedicated form.
+- **Creator Dashboard**: A central hub to create, edit, and delete courses.
+- **Course & Lesson Management**: Easily add and manage courses and their associated lessons.
+- **AI Transcription Service**: Automatically generate and attach transcripts to video lessons via a simulated AI service.
+- **Review Workflow**: Submit created courses for administrative review before they are published.
+
+### Admin Features
+- **Admin Dashboard**: A powerful interface for platform oversight.
+- **Application Review**: Review and approve/reject applications from users wanting to become creators.
+- **Course Moderation**: Review, approve (publish), or reject courses submitted by creators.
 
 ## 📁 Project Structure
 
